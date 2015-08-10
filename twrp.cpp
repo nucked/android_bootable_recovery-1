@@ -305,6 +305,12 @@ int main(int argc, char **argv) {
 	if(crash_counter == 0)
 		TWFunc::Fixup_Time_On_Boot();
 
+#ifdef TW_UNMOUNT_FIRMWARE_ON_BOOT
+	if (PartitionManager.Is_Mounted_By_Path("/firmware")) {
+		PartitionManager.UnMount_By_Path("/firmware", false);
+	}
+#endif
+
 #ifndef TW_OEM_BUILD
 	// Check if system has never been changed
 	TWPartition* sys = PartitionManager.Find_Partition_By_Path("/system");
